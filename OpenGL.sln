@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLCore", "src\GLCore\GLCore.vcxproj", "{026821CD-79A9-41E5-A94B-DA149FC2F3EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB588258-3738-4F21-9770-F7DCFD394751} = {DB588258-3738-4F21-9770-F7DCFD394751}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "src\Common\Common.vcxproj", "{DB588258-3738-4F21-9770-F7DCFD394751}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "src\Engine\OpenGL.vcxproj", "{3C11CB0F-2112-4B2E-A85C-013FA9CF982C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB588258-3738-4F21-9770-F7DCFD394751} = {DB588258-3738-4F21-9770-F7DCFD394751}
+		{026821CD-79A9-41E5-A94B-DA149FC2F3EB} = {026821CD-79A9-41E5-A94B-DA149FC2F3EB}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{026821CD-79A9-41E5-A94B-DA149FC2F3EB}.Release|x64.ActiveCfg = Release|x64
+		{026821CD-79A9-41E5-A94B-DA149FC2F3EB}.Release|x64.Build.0 = Release|x64
+		{DB588258-3738-4F21-9770-F7DCFD394751}.Release|x64.ActiveCfg = Release|x64
+		{DB588258-3738-4F21-9770-F7DCFD394751}.Release|x64.Build.0 = Release|x64
+		{3C11CB0F-2112-4B2E-A85C-013FA9CF982C}.Release|x64.ActiveCfg = Release|x64
+		{3C11CB0F-2112-4B2E-A85C-013FA9CF982C}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97D7364A-3B24-4788-877A-5D68BE269A00}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{c8d93a5c-fa29-4540-bdb7-c5a4214fb847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{66552822-7d58-416c-8680-8075c18af6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\base">
+      <UniqueIdentifier>{aa520511-69bd-42ad-aa7f-f89e429f7da9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="definitions\input_handler.cpp" />
+    <ClCompile Include="definitions\window.cpp" />
+    <ClCompile Include="definitions\entities\object.cpp" />
+    <ClCompile Include="definitions\entities\shapes.cpp" />
+    <ClCompile Include="definitions\entities\meta\avv_types.cpp" />
+    <ClCompile Include="definitions\entities\instance.cpp" />
+    <ClCompile Include="definitions\entities\camera.cpp" />
+    <ClCompile Include="definitions\entities\camera_helper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="definitions\input_handler.h" />
+    <ClInclude Include="definitions\window.h">
+      <Filter>src\base</Filter>
+    </ClInclude>
+    <ClInclude Include="definitions\entities\object.h" />
+    <ClInclude Include="definitions\entities\shapes.h" />
+    <ClInclude Include="definitions\entities\instance.h" />
+    <ClInclude Include="definitions\entities\meta\avv_types.h" />
+    <ClInclude Include="definitions\entities\camera.h" />
+  </ItemGroup>
+</Project>
