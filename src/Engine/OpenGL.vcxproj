@@ -19,24 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="definitions\entities\camera.cpp" />
-    <ClCompile Include="definitions\entities\camera_helper.cpp" />
-    <ClCompile Include="definitions\entities\instance.cpp" />
-    <ClCompile Include="definitions\entities\object.cpp" />
-    <ClCompile Include="definitions\entities\shapes.cpp" />
-    <ClCompile Include="definitions\entities\meta\avv_types.cpp" />
-    <ClCompile Include="definitions\input_handler.cpp" />
-    <ClCompile Include="definitions\window.cpp" />
+    <ClCompile Include="entities\camera.cpp" />
+    <ClCompile Include="entities\instance.cpp" />
+    <ClCompile Include="entities\object.cpp" />
+    <ClCompile Include="entities\shapes.cpp" />
+    <ClCompile Include="entities\meta\avv_types.cpp" />
+    <ClCompile Include="input_handler.cpp" />
+    <ClCompile Include="window.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="definitions\entities\camera.h" />
-    <ClInclude Include="definitions\entities\instance.h" />
-    <ClInclude Include="definitions\entities\object.h" />
-    <ClInclude Include="definitions\entities\shapes.h" />
-    <ClInclude Include="definitions\entities\meta\avv_types.h" />
-    <ClInclude Include="definitions\input_handler.h" />
-    <ClInclude Include="definitions\window.h" />
+    <ClInclude Include="entities\camera.h" />
+    <ClInclude Include="entities\instance.h" />
+    <ClInclude Include="entities\object.h" />
+    <ClInclude Include="entities\shapes.h" />
+    <ClInclude Include="entities\meta\avv_types.h" />
+    <ClInclude Include="input_handler.h" />
+    <ClInclude Include="window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

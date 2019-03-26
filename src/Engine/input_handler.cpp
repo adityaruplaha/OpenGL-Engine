@@ -1,12 +1,12 @@
 #include <algorithm>
 #include "input_handler.h"
 
-InputHandler::InputHandler(GLFWwindow* window)
+InputHandler::InputHandler(Window* window)
 {
 	attach(window);
 }
 
-void InputHandler::attach(GLFWwindow* window)
+void InputHandler::attach(Window* window)
 {
 	attached_window = window;
 }
@@ -47,9 +47,10 @@ void InputHandler::disconnect(std::vector<int> keys)
 
 void InputHandler::listen()
 {
+	auto* ptr = attached_window->getWindowPointer();
 	for (auto b : binds)
 	{
-		if (glfwGetKey(attached_window, b.first) == GLFW_PRESS)
+		if (glfwGetKey(ptr, b.first) == GLFW_PRESS)
 			(b.second)();
 	}
 
@@ -58,7 +59,7 @@ void InputHandler::listen()
 		bool active = true;
 		for (auto k : b.first)
 		{
-			active = active && (glfwGetKey(attached_window, k) == GLFW_PRESS);
+			active = active && (glfwGetKey(ptr, k) == GLFW_PRESS);
 		}
 		if (active)
 		{

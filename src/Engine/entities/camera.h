@@ -1,9 +1,8 @@
 #pragma once
 
-#include <future>
-#include <memory>
-#include <Common/watcher.h>
+#include "../window.h"
 #include <GLCore/base/gl_math_defs.h>
+
 // Roll is not implemented.
 struct CameraOrientation
 {
@@ -28,25 +27,28 @@ public:
 	void start();
 	void stop();
 
-	std::atomic<CameraOrientation> orientation;
+	CameraOrientation orientation;
 	void setDirection(float yaw, float pitch);
 	void setDirection(glm::vec3& target);
 	void setPosition(glm::vec3& pos);
 	void setRoll(float roll);
 
+	// Mostly to be used by flush() but can be used manually.
+	void recompute_if_dirty();
+
+	static void flush();
 	static Camera* current_camera;
 
 private:
 	AxisData axes;
 	void recalculateAxes();
 
-	std::atomic<CameraOrientation> previous_orientation;
-
-	Watcher<Camera> watcher;
+	glm::mat4 viewMatrix;
 
 	static void setViewMatrix(Camera* c);
 
-	static void(*camera_watcher)(Camera*);
+	// Contains the previous orientation
+	CameraOrientation previous_orientation;
 };
 
 namespace Directions {

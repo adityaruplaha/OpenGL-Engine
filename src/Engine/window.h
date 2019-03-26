@@ -17,10 +17,18 @@ public:
 
 	Window(int width, int height, std::string name, PerscectiveData p = {});
 	void setup();
+
+	bool should_close();
+	void close();
+
+	void buffer_swap();
+
 	GLFWwindow* getWindowPointer();
 
 	int width;
 	int height;
+
+	static void clear();
 	
 private:
 	PerscectiveData p;

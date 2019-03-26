@@ -28,6 +28,27 @@ void Window::setup()
 	perspective();
 }
 
+bool Window::should_close()
+{
+	return glfwWindowShouldClose(getWindowPointer());
+}
+
+void Window::close()
+{
+	glfwSetWindowShouldClose(getWindowPointer(), true);
+}
+
+void Window::buffer_swap()
+{
+	glfwSwapBuffers(getWindowPointer());
+	glfwPollEvents();
+}
+
+void Window::clear()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 GLFWwindow* Window::getWindowPointer()
 {
 	return window;
@@ -37,9 +58,11 @@ void Window::perspective()
 {
 	auto& [fov, n, f] = p;
 	glm::mat4 proj = glm::mat4(1.0f);
-	if (fov && n && f)
+	// If fov = 0, clearly we wan't orthographic projection.
+	if (fov)
 	{
-		proj = glm::perspective(glm::radians(fov), (float)width / (float)height, n, f);
+		float aspect = (float)width / (float)height;
+		proj = glm::perspective(glm::radians(fov), aspect, n, f);
 	}
 	if (Program::current_program)
 	{
