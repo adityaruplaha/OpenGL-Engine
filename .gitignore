@@ -1,11 +1,3 @@
-*.log
-*.tlog
-*.lastbuildstate
-*.obj
-*.idb
-*.pdb
-*.ilk
-.vs
-Debug
-Release
-x64
+logs
+include-ext
+lib-ext

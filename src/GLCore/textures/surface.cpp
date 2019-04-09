@@ -72,8 +72,3 @@ void Surface::clearCache()
 #endif
 	surface_cache.clear();
 }
-
-
-Surface* Surface(std::string path) {
-
-};

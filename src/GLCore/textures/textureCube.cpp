@@ -8,7 +8,7 @@ TextureCube::TextureCube(std::array<std::string, 6> path, GLenum image_format, G
 {
 	GLint texture_units;
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &texture_units);
-	assert(this.bound_sampler_unit < texture_units);
+	assert(this->bound_sampler_unit < texture_units);
 
 	glActiveTexture(bound_sampler_unit + GL_TEXTURE0);
 	glGenTextures(1, &texture);
