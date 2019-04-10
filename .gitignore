@@ -1,3 +1,2 @@
 logs
-include-ext
-lib-ext
+.*

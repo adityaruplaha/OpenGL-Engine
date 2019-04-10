@@ -24,7 +24,8 @@ BaseMap::operator float()
 
 double BaseMap::getSeconds()
 {
-	return std::chrono::high_resolution_clock::now().time_since_epoch().count() / pow(10.0, 9.0);
+	static constexpr double factor = static_cast<double>(std::nano().den);
+	return std::chrono::high_resolution_clock::now().time_since_epoch().count() / factor;
 }
 
 // This is shouldn't be called.
@@ -33,7 +34,7 @@ double BaseMap::getSeconds()
 // Implement constructors. I use a macro to reduce work.
 #ifndef IMPLEMENT_MAP_CONSTRUCTOR
 
-#define IMPLEMENT_MAP_CONSTRUCTOR(x) x##::##x##(double lower, double upper, double speed) : BaseMap(lower, upper, speed) {}
+#define IMPLEMENT_MAP_CONSTRUCTOR(x) x::x(double lower, double upper, double speed) : BaseMap(lower, upper, speed) {}
 
 IMPLEMENT_MAP_CONSTRUCTOR(SinMap)
 IMPLEMENT_MAP_CONSTRUCTOR(PingPongMap)

@@ -20,11 +20,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-include_directories("include-ext")
+include_directories("externals")
 include_directories("${PROJECT_BINARY_DIR}/generated")
 
-link_directories("lib-ext")
+link_directories("${PROJECT_BINARY_DIR}/lib")
 link_directories(CMAKE_RUNTIME_OUTPUT_DIRECTORY)
 
 # Get git branch
@@ -50,6 +52,14 @@ set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
 message(STATUS "Project Root: ${PROJECT_ROOT_DIR}")
 
 configure_file("src/Common/cmake_vars.cpp.in" "${PROJECT_BINARY_DIR}/generated/cmake_vars.cpp")
+
+# Generate GLFW
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build GLFW as shared library.")
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Do not build GLFW examples.")
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "Do not build GLFW tests.")
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "Do not build GLFW docs.")
+set(GLFW_INSTALL OFF CACHE BOOL "Do not build GLFW installer target.")
+add_subdirectory("externals/glfw")
 
 add_subdirectory("src")
 
