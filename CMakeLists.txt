@@ -60,6 +60,7 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "Do not build GLFW tests.")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "Do not build GLFW docs.")
 set(GLFW_INSTALL OFF CACHE BOOL "Do not build GLFW installer target.")
 add_subdirectory("externals/glfw")
+create_target_directory_groups("glfw")
 
 add_subdirectory("src")
 

@@ -2,7 +2,7 @@
 
 #include <map>
 #include <string>
-#include <GLCore\base\base.h>
+#include <GLCore/base/base.h>
 
 struct PerscectiveData
 {

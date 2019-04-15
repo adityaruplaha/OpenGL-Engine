@@ -1,23 +1,18 @@
 #include <sstream>
+#include <map>
+
+#ifdef WIN32
 #include <Windows.h>
+#endif
 
 #include "log.h"
 
-
-const int QuikLogger::LOG_SUCCESS = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-const int QuikLogger::LOG_INFO = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-const int QuikLogger::LOG_WARNING = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
-const int QuikLogger::LOG_ERROR = FOREGROUND_RED | FOREGROUND_INTENSITY;
-const int QuikLogger::LOG_CRITICAL = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
-
-const int QuikLogger::LOG_UNKNOWN = BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE;
-
-QuikLogger::~QuikLogger()
+Logger::~Logger()
 {
 	file->close();
 }
 
-void QuikLogger::log(int level, std::string from, int line, const char* format, ...)
+void Logger::log(LogLevel level, std::string from, int line, const char* format, ...)
 {
 	if (!log_enabled)
 	{
@@ -27,28 +22,26 @@ void QuikLogger::log(int level, std::string from, int line, const char* format, 
 	// get time
 	time_t rawtime;
 	time(&rawtime);
-	struct tm timeinfo;
-	localtime_s(&timeinfo, &rawtime);
+	tm* timeinfo = localtime(&rawtime);
 	char time_buf[64];
-	strftime(time_buf, sizeof(time_buf) / sizeof(char), "[%D %I:%M%p] ", &timeinfo);
+	strftime(time_buf, sizeof(time_buf) / sizeof(char), "[%D %I:%M%p] ", &*timeinfo);
 
 	// generate log
 	va_list args;
 	va_start(args, format);
 	char buf[512];
-	vsprintf_s(buf, format, args);
+	vsprintf(buf, format, args);
 	va_end(args);
 	// end generate log
 
 	std::string lv = getLevel(level);
 
 	char ss[1024];
-	sprintf_s(ss, "%s %s (%s)::L%i    %s\n", std::string(time_buf).c_str(), lv.c_str(), from.c_str(), line, std::string(buf).c_str());
+	sprintf(ss, "%s %s (%s)::L%i    %s\n", std::string(time_buf).c_str(), lv.c_str(), from.c_str(), line, std::string(buf).c_str());
 
-	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hStdOut, (lv == getLevel(LOG_UNKNOWN) ? LOG_UNKNOWN : level));
-
+	setColor(level);
 	std::cout << ss;
+	setColor(LogLevel::Info);
 
 	if (file->is_open())
 	{
@@ -56,33 +49,74 @@ void QuikLogger::log(int level, std::string from, int line, const char* format, 
 	}
 }
 
-void QuikLogger::registerFile(std::ofstream* file)
+#ifdef WIN32
+
+void setColor(LogLevel level)
 {
-	this->file.reset(file);
+	static const std::map<LogLevel, int> color_map
+	{
+		{LogLevel::Critical, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY},
+		{LogLevel::Error, FOREGROUND_RED | FOREGROUND_INTENSITY},
+		{LogLevel::Warning, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY},
+		{LogLevel::Info, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY},
+		{LogLevel::Success, FOREGROUND_GREEN | FOREGROUND_INTENSITY}
+	};
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hStdOut, color_map[level]);
 }
 
-void QuikLogger::enableLog(bool val)
+#else
+
+void Logger::setColor(LogLevel level)
+{
+	static const std::string red = "\033[1;31m";
+	static const std::string green = "\033[1;32m";
+	static const std::string yellow = "\033[1;33m";
+	static const std::string magenta = "\033[1;35m";
+	static const std::string white = "\033[1;37m";
+
+	switch (level)
+	{
+	case(LogLevel::Critical):
+		std::cout << magenta; break;
+	case(LogLevel::Error):
+		std::cout << red; break;
+	case(LogLevel::Warning):
+		std::cout << yellow; break;
+	case(LogLevel::Info):
+		std::cout << white; break;
+	case(LogLevel::Success):
+		std::cout << green; break;
+	}
+}
+
+#endif
+
+void Logger::registerFile(std::ofstream* file)
+{
+	this->file = file;
+}
+
+void Logger::enableLog(bool val)
 {
 	log_enabled = val;
 }
 
-std::string QuikLogger::getLevel(int level)
+std::string Logger::getLevel(LogLevel level)
 {
 	switch (level)
 	{
-	case(LOG_CRITICAL):
+	case(LogLevel::Critical):
 		return "<Critical>";
-	case(LOG_ERROR):
+	case(LogLevel::Error):
 		return "<Error>   ";
-	case(LOG_WARNING):
+	case(LogLevel::Warning):
 		return "<Warning> ";
-	case(LOG_INFO):
+	case(LogLevel::Info):
 		return "<Info>    ";
-	case(LOG_SUCCESS):
+	case(LogLevel::Success):
 		return "<Success> ";
-	default:
-		return "<Unknown> ";
 	}
 }
 
-extern std::shared_ptr<QuikLogger> logger = std::make_shared<QuikLogger>();
+extern std::shared_ptr<Logger> logger = std::make_shared<Logger>();
