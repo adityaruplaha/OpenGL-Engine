@@ -54,7 +54,6 @@ message(STATUS "Project Root: ${PROJECT_ROOT_DIR}")
 configure_file("src/Common/cmake_vars.cpp.in" "${PROJECT_BINARY_DIR}/generated/cmake_vars.cpp")
 
 # Generate GLFW
-set(BUILD_SHARED_LIBS ON CACHE BOOL "Build GLFW as shared library.")
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Do not build GLFW examples.")
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "Do not build GLFW tests.")
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "Do not build GLFW docs.")
