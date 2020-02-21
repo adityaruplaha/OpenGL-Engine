@@ -13,7 +13,7 @@ TextureCube::TextureCube(std::array<std::string, 6> path, GLenum image_format, G
 	glActiveTexture(bound_sampler_unit + GL_TEXTURE0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
-	LOG_INFO("A new cubemap texture was created at 0x%p.", &texture);
+	LOG_INFO("A new cubemap texture was created at %p.", &texture);
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

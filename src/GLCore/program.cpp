@@ -6,13 +6,13 @@ Program* Program::current_program{};
 Program::Program() : metadata{"", "", ""}
 {
 	program = glCreateProgram();
-	LOG_INFO("A new shader program was created at 0x%p.", &program);
+	LOG_INFO("A new shader program was created at %p.", &program);
 }
 
 Program::Program(int shader_count, ...) : metadata{"", "", ""}
 {
 	program = glCreateProgram();
-	LOG_INFO("A new shader program was created at 0x%p.", &program);
+	LOG_INFO("A new shader program was created at %p.", &program);
 
 	va_list args;
 	va_start(args, shader_count);
@@ -40,11 +40,11 @@ void Program::link()
 	{
 		if (!shader->is_compiled)
 		{
-			LOG_WARNING("0x%p: A shader wasn't pre-compiled. Compiling it now...", &program);
+			LOG_WARNING("%p: A shader wasn't pre-compiled. Compiling it now...", &program);
 			shader->compile();
 			if (!shader->is_compiled)
 			{
-				LOG_CRITICAL("0x%p: Shader couldn't be compiled!", &program);
+				LOG_CRITICAL("%p: Shader couldn't be compiled!", &program);
 			}
 		}
 		glAttachShader(program, shader->get());
@@ -61,10 +61,10 @@ void Program::link()
 	if (!success)
 	{
 		glGetProgramInfoLog(program, 1024, NULL, infoLog);
-		LOG_ERROR("Program at 0x%p failed to be linked.\n%s", &program, infoLog);
+		LOG_ERROR("Program at %p failed to be linked.\n%s", &program, infoLog);
 		return;
 	}
-	LOG_SUCCESS("Program at 0x%p was linked successfully.", &program);
+	LOG_SUCCESS("Program at %p was linked successfully.", &program);
 }
 
 void Program::start()
@@ -123,7 +123,7 @@ int Program::getUniformLocation(std::string name)
 	auto result = glGetUniformLocation(program, name.c_str());
 	if (result == -1)
 	{
-		LOG_WARNING("0x%p: Invalid uniform name: '%s'", &program, name.c_str());
+		LOG_WARNING("%p: Invalid uniform name: '%s'", &program, name.c_str());
 	}
 	return result;
 }
@@ -136,7 +136,7 @@ void Program::parseMetadata(Shader*& shader)
 	else
 	{
 		if (!shader->metadata.model_mat_name.empty())
-			LOG_ERROR("0x%p: Model matrix uniform name mismatch!", &program);
+			LOG_ERROR("%p: Model matrix uniform name mismatch!", &program);
 	}
 
 	if (metadata.view_mat_name.empty() || metadata.view_mat_name == shader->metadata.view_mat_name) {
@@ -145,7 +145,7 @@ void Program::parseMetadata(Shader*& shader)
 	else
 	{
 		if (!shader->metadata.view_mat_name.empty())
-			LOG_ERROR("0x%p: View matrix uniform name mismatch!", &program);
+			LOG_ERROR("%p: View matrix uniform name mismatch!", &program);
 	}
 
 	if (metadata.proj_mat_name.empty() || metadata.proj_mat_name == shader->metadata.proj_mat_name) {
@@ -154,6 +154,6 @@ void Program::parseMetadata(Shader*& shader)
 	else
 	{
 		if (!shader->metadata.proj_mat_name.empty())
-			LOG_ERROR("0x%p: Projection matrix uniform name mismatch!", &program);
+			LOG_ERROR("%p: Projection matrix uniform name mismatch!", &program);
 	}
 }

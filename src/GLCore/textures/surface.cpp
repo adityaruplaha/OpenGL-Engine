@@ -20,11 +20,11 @@ Surface* Surface::create(std::string path)
 	auto* surface = iterator->second;
 	if (surface && surface->getData())
 	{
-		LOG_INFO("Pre-cached surface found for %s: 0x%p", path.c_str(), surface_cache[path]);
+		LOG_INFO("Pre-cached surface found for %s: %p", path.c_str(), surface_cache[path]);
 		return surface_cache[path];
 	}
 	// Surface is invalid. Delete it and return a fresh one.
-	LOG_WARNING("Pre-cached surface found for %s: 0x%p but it is invalid. Regenerating...", path.c_str(), surface_cache[path]);
+	LOG_WARNING("Pre-cached surface found for %s: %p but it is invalid. Regenerating...", path.c_str(), surface_cache[path]);
 	delete surface_cache[path];
 	return Surface::create(path);
 }
@@ -35,10 +35,10 @@ Surface::Surface(std::string path) : path(path)
 	data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 	if (!data)
 	{
-		LOG_ERROR("0x%p: Failed to load image %s.", this, path.c_str());
+		LOG_ERROR("%p: Failed to load image %s.", this, path.c_str());
 		return;
 	}
-	LOG_SUCCESS("0x%p: Loaded image %s.", this, path.c_str());
+	LOG_SUCCESS("%p: Loaded image %s.", this, path.c_str());
 
 	surface_cache[path] = this;
 }

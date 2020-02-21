@@ -27,10 +27,7 @@ void PingPongMap::recompute()
 	double seconds = getSeconds();
 
 	val = seconds * speed;
-	while (val > 2)
-	{
-		val -= 2;
-	}
+	val = fmod(val, 2);
 	// val between 0 & 2
 
 	// magic function: y = -|x-1|+1
@@ -50,10 +47,7 @@ void BouncyMap::recompute()
 	double seconds = getSeconds();
 
 	val = seconds * speed * 2;
-	while (val > 2)
-	{
-		val -= 2;
-	}
+	val = fmod(val, 2);
 	// val between 0 & 2
 
 	// magic function: y = x(2-x)
