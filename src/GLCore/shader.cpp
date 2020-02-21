@@ -21,10 +21,10 @@ Shader* Shader::create(std::ifstream stream, int type)
 Shader::Shader(std::string& src, int type) : src(src), type(type)
 {
 	shader = glCreateShader(this->type);
-	LOG_INFO("A new %s was created at 0x%p.", getShaderName(this->type).c_str(), &shader);
+	LOG_INFO("A new %s was created at %p.", getShaderName(this->type).c_str(), &shader);
 	if (this->src.empty())
 	{
-		LOG_ERROR("0x%p: Shader is blank!", &shader);
+		LOG_ERROR("%p: Shader is blank!", &shader);
 	}
 
 	shader_cache[src] = this;
@@ -33,7 +33,7 @@ Shader::Shader(std::string& src, int type) : src(src), type(type)
 Shader::~Shader()
 {
 	shader = glCreateShader(type);
-	LOG_INFO("0x%p: Shader deleted.", getShaderName(type), &shader);
+	LOG_INFO("%p: Shader deleted.", getShaderName(type), &shader);
 
 	glDeleteShader(shader);
 }
@@ -92,10 +92,10 @@ void Shader::compile()
 	if (!success)
 	{
 		glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-		LOG_ERROR("Shader compilation for %s at 0x%p failed.\n%s", getShaderName(type).c_str(), &shader, infoLog);
+		LOG_ERROR("Shader compilation for %s at %p failed.\n%s", getShaderName(type).c_str(), &shader, infoLog);
 		return;
 	}
-	LOG_SUCCESS("%s at 0x%p was compiled successfully.", getShaderName(type).c_str(), &shader);
+	LOG_SUCCESS("%s at %p was compiled successfully.", getShaderName(type).c_str(), &shader);
 	is_compiled = true;
 }
 GLuint Shader::get()

@@ -8,7 +8,6 @@ class Surface
 public:
 	static Surface* create(std::string path);
 
-	Surface(std::string path);
 	~Surface();
 	int width, height, nrChannels;
 	unsigned char* getData();
@@ -19,6 +18,8 @@ public:
 	static void clearCache();
 
 private:
+	Surface(std::string path);
+
 	const std::string path;
 	unsigned char* data;
 

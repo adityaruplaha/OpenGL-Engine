@@ -16,7 +16,11 @@ int main()
 	Initializer::InitGL();	
 	REGISTER_LOG_FILE(new std::ofstream(PROJECT_ROOT_DIR + "logs/log.log"));
 
-	auto *window = new Window(600, 600, "OpenGL Engine 0.0.1", {45.0f, 0.1f, 100.0f});
+	LOG_INFO("Initialized program.");
+	auto version = GIT_BRANCH + "@" + GIT_COMMIT;
+	LOG_INFO("Version: %s.", version.c_str());
+
+	auto *window = new Window(600, 600, "OpenGL Engine " + version, {45.0f, 0.1f, 100.0f});
 	Initializer::GLAD_Init();
 	auto *handler = new InputHandler(window);
 
@@ -66,8 +70,8 @@ int main()
 		prog->setFloat("ratio", mix_ratio);
 
 		instance->orientation.position.z = mix_ratio;
-		instance->orientation.rotation.x -= 0.5f;
-		instance->orientation.rotation.y += 0.37f;
+		instance->orientation.rotation.x -= 0.7f;
+		instance->orientation.rotation.y += 0.57f;
 		instance->render();
 
 		Camera::flush();

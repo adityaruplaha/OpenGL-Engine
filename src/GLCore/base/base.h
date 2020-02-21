@@ -5,12 +5,9 @@
 
 #include <Common/log.h>
 
-class Initializer {
+namespace Initializer {
 
-public:
-
-	static void InitGL()
-	{
+	inline void InitGL() {
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -19,8 +16,7 @@ public:
 		glfwWindowHint(GLFW_SAMPLES, 4);
 	}
 
-	static void GLAD_Init()
-	{
+	inline void GLAD_Init() {
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
 			throw "Failed to initialize GLAD!\n";

@@ -3,21 +3,21 @@
 VBO::VBO(std::vector<float> buffer_data, std::vector<int> slice_attribs, unsigned int stride)
 {
 	glGenBuffers(1, &vbo);
-	LOG_SUCCESS("New VBO created at 0x%p.", &vbo);
+	LOG_SUCCESS("New VBO created at %p.", &vbo);
 	bind();
 	if (!buffer_data.size())
 	{
-		LOG_ERROR("0x%p: Empty buffer passed as a argument.", &vbo);
+		LOG_ERROR("%p: Empty buffer passed as a argument.", &vbo);
 	}
 	copyFrom(buffer_data);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * buffer_data.size(), buffer_data_internal, GL_STATIC_DRAW);
 	if (glGetError() == GL_NO_ERROR)
 	{
-		LOG_SUCCESS("0x%p: Buffer data initialized successfully.", &vbo);
+		LOG_SUCCESS("%p: Buffer data initialized successfully.", &vbo);
 	}
 	else
 	{
-		LOG_ERROR("0x%p: Buffer data was NOT initialized successfully.", &vbo);
+		LOG_ERROR("%p: Buffer data was NOT initialized successfully.", &vbo);
 	}
 
 	if (!stride)
@@ -26,7 +26,7 @@ VBO::VBO(std::vector<float> buffer_data, std::vector<int> slice_attribs, unsigne
 		{
 			stride += size;
 		}
-		LOG_INFO("0x%p: Buffer stride determined as %i.", &vbo, stride);
+		LOG_INFO("%p: Buffer stride determined as %i.", &vbo, stride);
 	}
 
 	slice_using(slice_attribs, stride);
@@ -46,11 +46,11 @@ void VBO::slice_using(std::vector<int> slice_attribs, unsigned int stride)
 		glEnableVertexAttribArray(i);
 		if (glGetError() == GL_NO_ERROR)
 		{
-			LOG_SUCCESS("0x%p: Sliced %i values at [offset=0x%i] for attribute (location=%i).", &vbo, size, offset, i);
+			LOG_SUCCESS("%p: Sliced %i values at [offset=%i] for attribute (location=%i).", &vbo, size, offset, i);
 		}
 		else
 		{
-			LOG_ERROR("0x%p: Unable to slice for attribute location %i.", &vbo, i);
+			LOG_ERROR("%p: Unable to slice for attribute location %i.", &vbo, i);
 		}
 		i++;
 		offset += size;

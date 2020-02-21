@@ -3,7 +3,7 @@
 VAO::VAO()
 {
 	glGenVertexArrays(1, &vao);
-	LOG_SUCCESS("New VAO created at 0x%p.", &vao);
+	LOG_SUCCESS("New VAO created at %p.", &vao);
 }
 
 

@@ -12,7 +12,7 @@ Texture2D::Texture2D(std::string path, GLenum image_format, GLint filtering, uns
 	glActiveTexture(bound_sampler_unit + GL_TEXTURE0);
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	LOG_INFO("A new 2D texture was created at 0x%p.", &texture);
+	LOG_INFO("A new 2D texture was created at %p.", &texture);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

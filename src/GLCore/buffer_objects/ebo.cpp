@@ -3,21 +3,21 @@
 EBO::EBO(std::vector<GLuint> buffer_data)
 {
 	glGenBuffers(1, &ebo);
-	LOG_SUCCESS("New EBO created at 0x%p.", &ebo);
+	LOG_SUCCESS("New EBO created at %p.", &ebo);
 	bind();
 	if (!buffer_data.size())
 	{
-		LOG_ERROR("0x%p: Empty buffer passed as a argument.", &ebo);
+		LOG_ERROR("%p: Empty buffer passed as a argument.", &ebo);
 	}
 	copyFrom(buffer_data);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * buffer_data.size(), buffer_data_internal, GL_STATIC_DRAW);
 	if (glGetError() == GL_NO_ERROR)
 	{
-		LOG_SUCCESS("0x%p: Buffer data initialized successfully.", &ebo);
+		LOG_SUCCESS("%p: Buffer data initialized successfully.", &ebo);
 	}
 	else
 	{
-		LOG_ERROR("0x%p: Buffer data was NOT initialized successfully.", &ebo);
+		LOG_ERROR("%p: Buffer data was NOT initialized successfully.", &ebo);
 	}
 }
 
