@@ -64,7 +64,8 @@ void Camera::flush()
 
 void Camera::recalculateAxes()
 {
-	axes.right = glm::normalize(glm::cross(Directions::UP, -orientation.direction));
+	glm::mat4 roll_mat = glm::rotate(glm::mat4(1.0f), orientation.roll, -orientation.direction);
+	axes.right = glm::normalize(glm::cross(glm::vec3(glm::vec4(Directions::UP, 1.0f) * roll_mat), -orientation.direction));
 	axes.up = glm::normalize(glm::cross(-orientation.direction, axes.right));
 }
 

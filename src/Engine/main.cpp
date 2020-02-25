@@ -59,21 +59,21 @@ int main()
 	auto *cam = new Camera(o);
 	cam->start();
 
-	auto mix_ratio = PingPongMap(0, 1, 0.5);
+	auto camera_roll =  SinMap(-3.15, 3.15, 0.45f);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+
+	prog->setFloat("ratio", 0.7f);
 
 	while (!window->should_close())
 	{
 		Window::clear();
 		handler->listen();
-		
-		prog->setFloat("ratio", mix_ratio);
 
-		instance->orientation.position.z = mix_ratio;
-		instance->orientation.rotation.x -= 0.7f;
-		instance->orientation.rotation.y += 0.57f;
 		instance->render();
 
+		cam->orientation.roll = camera_roll;
+		//cam->orientation.position.y = static_cast<float>(camera_roll) + 3.16f;
+		cam->setDirection(instance->orientation.position);
 		Camera::flush();
 		window->buffer_swap();
 	}

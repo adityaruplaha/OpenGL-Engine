@@ -3,7 +3,6 @@
 #include "../window.h"
 #include <GLCore/base/gl_math_defs.h>
 
-// Roll is not implemented.
 struct CameraOrientation
 {
 	glm::vec3 position;
