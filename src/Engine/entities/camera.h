@@ -3,21 +3,22 @@
 #include "../window.h"
 #include <GLCore/base/gl_math_defs.h>
 
-struct CameraOrientation
-{
-	glm::vec3 position;
-	glm::vec3 direction;
-	float roll;
-
-	float focal_dist;
-
-	glm::vec3 target();
-};
-
 struct AxisData
 {
 	glm::vec3 up;
 	glm::vec3 right;
+
+	glm::vec3 front() const;
+};
+
+struct CameraOrientation
+{
+	glm::vec3 position;
+	AxisData axes;
+
+	float focal_dist;
+
+	glm::vec3 target() const;
 };
 
 class Camera {
@@ -27,27 +28,29 @@ public:
 	void stop();
 
 	CameraOrientation orientation;
-	void setDirection(float yaw, float pitch);
-	void setDirection(glm::vec3& target);
+	
+	// Yaw, pitch by a certain amount in degrees. Incremental.
+	// +ve yaw: towards left of axes.front()
+	//   OR anticlockwise along axes.up (right hand thumb rule)
+	// +ve pitch: upwards ( axes.up --> see Camera::axes)
+	//   OR anticlockwise along axes.right (right hand thumb rule)
+	// +ve roll: Anticlockwise along orientation.direction (right hand thumb rule)       
+	void ypr(float yaw, float pitch, float roll);
+	// Set a target to look at.
+	void lookAt(glm::vec3& target);
+	// Set a position for the camera.
 	void setPosition(glm::vec3& pos);
-	void setRoll(float roll);
 
 	// Mostly to be used by flush() but can be used manually.
-	void recompute_if_dirty();
+	void recompute();
 
 	static void flush();
 	static Camera* current_camera;
 
 private:
-	AxisData axes;
-	void recalculateAxes();
-
 	glm::mat4 viewMatrix;
 
 	static void setViewMatrix(Camera* c);
-
-	// Contains the previous orientation
-	CameraOrientation previous_orientation;
 };
 
 namespace Directions {

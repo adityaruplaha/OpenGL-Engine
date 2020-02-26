@@ -54,15 +54,17 @@ int main()
 	prog->setInt("texture0", *container);
 	prog->setInt("texture1", *smile);
 
-	CameraOrientation o{glm::vec3(0, 0, 3), Directions::INTO_SCREEN, 0.0f, 1.0f};
+	CameraOrientation o{glm::vec3(0, 0, 2), {Directions::UP, Directions::RIGHT}, 1.0f};
 
 	auto *cam = new Camera(o);
 	cam->start();
 
-	auto camera_roll =  SinMap(-3.15, 3.15, 0.45f);
+	auto camera_y = SinMap(0.3, 8, 0.4);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	prog->setFloat("ratio", 0.7f);
+
+	cam->ypr(0, 0, 10.0f);
 
 	while (!window->should_close())
 	{
@@ -71,9 +73,9 @@ int main()
 
 		instance->render();
 
-		cam->orientation.roll = camera_roll;
-		//cam->orientation.position.y = static_cast<float>(camera_roll) + 3.16f;
-		cam->setDirection(instance->orientation.position);
+		cam->orientation.position.y = camera_y;
+		cam->lookAt(instance->orientation.position);
+		//cam->ypr(0,0, 10);
 		Camera::flush();
 		window->buffer_swap();
 	}
