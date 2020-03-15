@@ -1,29 +1,31 @@
 #include <algorithm>
 #include "input_handler.h"
 
-InputHandler::InputHandler(Window* window)
-{
-	attach(window);
-}
-
 void InputHandler::attach(Window* window)
 {
 	attached_window = window;
 }
 
-void InputHandler::connect(int key, std::function<void()> func)
+/// Specific stuff
+
+KeyboardInputHandler::KeyboardInputHandler(Window* window)
+{
+	this->attach(window);
+}
+
+void KeyboardInputHandler::connect(int key, std::function<void()> func)
 {
 	auto pair = std::make_pair(key, func);
 	binds.push_back(pair);
 }
 
-void InputHandler::connect(std::vector<int> keys, std::function<void()> func)
+void KeyboardInputHandler::connect(std::vector<int> keys, std::function<void()> func)
 {
 	auto pair = std::make_pair(keys, func);
 	binds_m.push_back(pair);
 }
 
-void InputHandler::disconnect(int key)
+void KeyboardInputHandler::disconnect(int key)
 {
 	for (int i = 0; i < binds.size(); i++)
 	{
@@ -34,7 +36,7 @@ void InputHandler::disconnect(int key)
 	}
 }
 
-void InputHandler::disconnect(std::vector<int> keys)
+void KeyboardInputHandler::disconnect(std::vector<int> keys)
 {
 	for (int i = 0; i < binds_m.size(); i++)
 	{
@@ -45,7 +47,7 @@ void InputHandler::disconnect(std::vector<int> keys)
 	}
 }
 
-void InputHandler::listen()
+void KeyboardInputHandler::listen()
 {
 	auto* ptr = attached_window->getWindowPointer();
 	for (auto b : binds)

@@ -22,7 +22,7 @@ int main()
 
 	auto *window = new Window(600, 600, "OpenGL Engine " + version, {45.0f, 0.1f, 100.0f});
 	Initializer::GLAD_Init();
-	auto *handler = new InputHandler(window);
+	auto *handler = new KeyboardInputHandler(window);
 
 	handler->connect(GLFW_KEY_ESCAPE, [&window]() { window->close(); });
 
@@ -59,12 +59,20 @@ int main()
 	auto *cam = new Camera(o);
 	cam->start();
 
+	handler->connect(GLFW_KEY_W, [&cam]() { cam->rmoveFD(); });
+	handler->connect(GLFW_KEY_S, [&cam]() { cam->rmoveBK(); });
+	handler->connect(GLFW_KEY_Q, [&cam]() { cam->rmoveLT(); });
+	handler->connect(GLFW_KEY_E, [&cam]() { cam->rmoveRT(); });
+
+	handler->connect(GLFW_KEY_A, [&cam]() { cam->rturnLT(); });
+	handler->connect(GLFW_KEY_D, [&cam]() { cam->rturnRT(); });
+
 	auto camera_y = SinMap(0.3, 8, 0.4);
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	prog->setFloat("ratio", 0.7f);
 
-	cam->ypr(0, 0, 10.0f);
+	//cam->ypr(0, 0, 10.0f);
 
 	while (!window->should_close())
 	{
@@ -73,8 +81,8 @@ int main()
 
 		instance->render();
 
-		cam->orientation.position.y = camera_y;
-		cam->lookAt(instance->orientation.position);
+		//cam->orientation.position.y = camera_y;
+		//cam->lookAt(instance->orientation.position);
 		//cam->ypr(0,0, 10);
 		Camera::flush();
 		window->buffer_swap();

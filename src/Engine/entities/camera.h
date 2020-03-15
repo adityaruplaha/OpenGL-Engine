@@ -38,8 +38,6 @@ public:
 	void ypr(float yaw, float pitch, float roll);
 	// Set a target to look at.
 	void lookAt(glm::vec3& target);
-	// Set a position for the camera.
-	void setPosition(glm::vec3& pos);
 
 	// Mostly to be used by flush() but can be used manually.
 	void recompute();
@@ -47,10 +45,29 @@ public:
 	static void flush();
 	static Camera* current_camera;
 
+	// Move methods
+	void rmoveFD(float amt = FDBK);
+	void rmoveBK(float amt = -FDBK);
+	void rmoveRT(float amt = LTRT);
+	void rmoveLT(float amt = -LTRT);
+	void rmoveUP(float amt = UPDN);
+	void rmoveDN(float amt = -UPDN);
+	void rturnRT(float amt = YAWM);
+	void rturnLT(float amt = -YAWM);
+
 private:
 	glm::mat4 viewMatrix;
 
 	static void setViewMatrix(Camera* c);
+
+	/// Default movement weights
+
+	constexpr static float UPDN = 0.05f;
+	constexpr static float LTRT = 0.075f;
+	constexpr static float FDBK = 0.075f;
+
+	// This should always be -ve for directions to make sense.
+	constexpr static float YAWM = -1.0f;
 };
 
 namespace Directions {

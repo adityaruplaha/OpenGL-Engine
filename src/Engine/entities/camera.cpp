@@ -77,11 +77,6 @@ void Camera::lookAt(glm::vec3& target)
 	orientation.axes.up = roll_mat * orientation.axes.up;
 }
 
-void Camera::setPosition(glm::vec3& pos)
-{
-	orientation.position = pos;
-}
-
 void Camera::recompute()
 {
 	viewMatrix = glm::lookAt(orientation.position, orientation.target(), orientation.axes.up);
@@ -104,4 +99,38 @@ void Camera::setViewMatrix(Camera* c)
 		mat = c->viewMatrix;
 	}
 	Program::current_program->setMat4(Program::current_program->metadata.view_mat_name, mat);
+}
+
+/// Camera movement methods
+
+void Camera::rmoveFD(float amt) {
+	orientation.position += amt * orientation.axes.front();
+}
+
+void Camera::rmoveBK(float amt) {
+	orientation.position += amt * orientation.axes.front();
+}
+
+void Camera::rmoveRT(float amt) {
+	orientation.position += amt * orientation.axes.right;
+}
+
+void Camera::rmoveLT(float amt) {
+	orientation.position += amt * orientation.axes.right;
+}
+
+void Camera::rmoveUP(float amt) {
+	orientation.position += amt * orientation.axes.up;
+}
+
+void Camera::rmoveDN(float amt) {
+	orientation.position += amt * orientation.axes.up;
+}
+
+void Camera::rturnLT(float amt) {
+	ypr(amt, 0, 0);
+}
+
+void Camera::rturnRT(float amt) {
+	ypr(amt, 0, 0);
 }
