@@ -3,18 +3,17 @@
 #include <vector>
 #include "../base/base.h"
 
-class EBO
-{
+class EBO {
 public:
-	EBO(std::vector<GLuint> buffer_data);	
-	void bind();
-	GLuint* get();
+    EBO(std::vector<GLuint> buffer_data);
+    void bind();
+    GLuint* get();
 
-	static void unbind();
+    static void unbind();
 
 private:
-	void copyFrom(std::vector<GLuint> data);
-	GLuint* buffer_data_internal;
+    void copyFrom(std::vector<GLuint> data);
+    GLuint* buffer_data_internal;
 
-	GLuint ebo;
+    GLuint ebo;
 };

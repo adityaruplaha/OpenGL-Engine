@@ -11,5 +11,5 @@ using Vertices = std::vector<Vertex>;
 
 using Indices = std::vector<GLuint>;
 
-Attribute operator +(Attribute& a, Attribute& b);
-Attribute operator -(Attribute& a, Attribute& b);
+Attribute operator+(Attribute& a, Attribute& b);
+Attribute operator-(Attribute& a, Attribute& b);

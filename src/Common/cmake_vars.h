@@ -3,9 +3,9 @@
 #include <string>
 
 namespace CMakeVars {
-	extern const std::string PROJECT_ROOT_DIR;
-	extern const std::string GIT_BRANCH;
-	extern const std::string GIT_COMMIT;
-}
+extern const std::string PROJECT_ROOT_DIR;
+extern const std::string GIT_BRANCH;
+extern const std::string GIT_COMMIT;
+} // namespace CMakeVars
 
 using namespace CMakeVars;

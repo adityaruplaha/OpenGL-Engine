@@ -5,35 +5,32 @@
 #include <string>
 #include "base/base.h"
 
-struct UniformMetadata
-{
-	std::string model_mat_name;
-	std::string view_mat_name;
-	std::string proj_mat_name;
+struct UniformMetadata {
+    std::string model_mat_name;
+    std::string view_mat_name;
+    std::string proj_mat_name;
 };
 
-class Shader
-{
+class Shader {
 public:
-	static Shader* create(std::ifstream stream, int type);	
-	~Shader();
+    static Shader* create(std::ifstream stream, int type);
+    ~Shader();
 
-	void compile();
-	GLuint get();
+    void compile();
+    GLuint get();
 
-	bool is_compiled = false;
+    bool is_compiled = false;
 
-	UniformMetadata metadata;
+    UniformMetadata metadata;
 
 private:
-	Shader(std::string& src, int type);
+    Shader(std::string& src, int type);
 
-	std::string src;
-	GLuint shader;
-	const int type;
+    std::string src;
+    GLuint shader;
+    const int type;
 
-	static std::string getShaderName(int type);
+    static std::string getShaderName(int type);
 
-	static std::map<std::string, Shader*> shader_cache;
+    static std::map<std::string, Shader*> shader_cache;
 };
-

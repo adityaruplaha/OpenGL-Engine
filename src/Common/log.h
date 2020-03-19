@@ -2,34 +2,27 @@
 
 #include <cstdarg>
 #include <ctime>
-#include <memory>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <memory>
 
-enum class LogLevel : uint8_t {
-	Success,
-	Info,
-	Warning,
-	Error,
-	Critical
-};
+enum class LogLevel : uint8_t { Success, Info, Warning, Error, Critical };
 
-class Logger
-{
+class Logger {
 public:
-	~Logger();
+    ~Logger();
 
-	void log(LogLevel level, std::string from, int line, const char* format, ...);
-	void registerFile(std::ofstream* file);
+    void log(LogLevel level, std::string from, int line, const char* format, ...);
+    void registerFile(std::ofstream* file);
 
-	void enableLog(bool val);
+    void enableLog(bool val);
 
 private:
-	bool log_enabled = true;
-	void setColor(LogLevel level);
+    bool log_enabled = true;
+    void setColor(LogLevel level);
 
-	static std::string getLevel(LogLevel level);
-	std::ofstream* file;
+    static std::string getLevel(LogLevel level);
+    std::ofstream* file;
 };
 
 extern std::shared_ptr<Logger> logger;

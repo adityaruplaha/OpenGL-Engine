@@ -2,14 +2,13 @@
 
 #include "../base/base.h"
 
-class VAO
-{
+class VAO {
 public:
-	VAO();
-	void bind();
+    VAO();
+    void bind();
 
-	static void unbind();
+    static void unbind();
 
 private:
-	GLuint vao;
+    GLuint vao;
 };
